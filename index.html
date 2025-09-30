@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AlumniConnect - SIH 2025 Alumni Management System</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sign In Page (Initially visible) -->
+    <div id="signInPage" class="auth-page active">
+        <div class="auth-container">
+            <div class="auth-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <h1>AlumniConnect</h1>
+                <p>SIH 2025 Alumni Management System</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="student">Student Login</button>
+                <button class="tab-btn" data-tab="alumni">Alumni Login</button>
+                <button class="tab-btn" data-tab="admin">Admin Login</button>
+            </div>
+
+            <!-- Student Login -->
+            <div id="studentTab" class="auth-form active">
+                <h2>Student Portal</h2>
+                <form id="studentLoginForm">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Student Email ID" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign In as Student</button>
+                </form>
+            </div>
+
+            <!-- Alumni Login -->
+            <div id="alumniTab" class="auth-form">
+                <h2>Alumni Portal</h2>
+                <form id="alumniLoginForm">
+                    <div class="input-group">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" placeholder="Alumni Email ID" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign In as Alumni</button>
+                </form>
+            </div>
+
+            <!-- Admin Login -->
+            <div id="adminTab" class="auth-form">
+                <h2>Admin Portal</h2>
+                <form id="adminLoginForm">
+                    <div class="input-group">
+                        <i class="fas fa-shield-alt"></i>
+                        <input type="email" placeholder="Admin Email ID" required>
+                    </div>
+                    <div class="input-group">
+                        <i class="fas fa-key"></i>
+                        <input type="password" placeholder="Admin Password" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign In as Admin</button>
+                </form>
+            </div>
+
+            <div class="auth-footer">
+                <p>First time? <a href="#" id="registerLink">Register here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application (Hidden initially) -->
+    <div id="mainApp" class="main-app">
+        <!-- Navigation -->
+        <header>
+            <nav class="container">
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    AlumniConnect
+                </div>
+                <ul class="nav-links">
+                    <li><a href="#dashboard" data-page="dashboard" class="active">Dashboard</a></li>
+                    <li><a href="#alumni-directory" data-page="alumni-directory">Alumni Directory</a></li>
+                    <li><a href="#reach-out" data-page="reach-out">Reach Out</a></li>
+                    <li><a href="#events" data-page="events">Events</a></li>
+                    <li><a href="#profile" data-page="profile">My Profile</a></li>
+                    <li><a href="#" class="btn-primary" id="userProfile">
+                        <i class="fas fa-user"></i> <span id="userName">User</span>
+                    </a></li>
+                    <li><a href="#" class="btn-secondary" id="logoutBtn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </a></li>
+                </ul>
+                <div class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="container main-content">
+            <!-- Dashboard Page -->
+            <div id="dashboard" class="page active">
+                <!-- Personalized Welcome -->
+                <section class="welcome-section">
+                    <div class="welcome-content">
+                        <h1>Welcome back, <span id="dashboardUserName">User</span>!</h1>
+                        <p id="welcomeMessage">Your personalized dashboard with recommendations and updates.</p>
+                    </div>
+                    <div class="user-role-badge">
+                        <i class="fas fa-user-tag"></i>
+                        <span id="userRoleBadge">Student</span>
+                    </div>
+                </section>
+
+                <!-- Quick Actions for Current User -->
+                <section class="quick-actions" id="dashboardQuickActions">
+                    <!-- Will be populated based on user role -->
+                </section>
+
+                <!-- Upcoming Events Section -->
+                <section class="events-preview">
+                    <div class="section-header">
+                        <h2><i class="fas fa-calendar-alt"></i> Upcoming Events You Might Be Interested In</h2>
+                        <a href="#events" class="view-all-link" data-page="events">View All Events</a>
+                    </div>
+                    <div class="events-slider" id="upcomingEventsSlider">
+                        <!-- Events will be populated here -->
+                    </div>
+                </section>
+
+                <!-- Recent Activity Feed -->
+                <section class="activity-feed">
+                    <h2><i class="fas fa-activity"></i> Recent Activity</h2>
+                    <div class="activity-list" id="activityFeed">
+                        <!-- Activity items will be populated here -->
+                    </div>
+                </section>
+
+                <!-- AI Recommendations -->
+                <section class="ai-recommendations" id="aiRecommendations">
+                    <h2><i class="fas fa-robot"></i> AI-Powered Recommendations</h2>
+                    <div class="recommendations-grid" id="recommendationsGrid">
+                        <!-- AI recommendations will be populated here -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Alumni Directory Page -->
+            <div id="alumni-directory" class="page">
+                <section class="page-header">
+                    <h1><i class="fas fa-users"></i> Alumni Directory</h1>
+                    <div class="header-actions">
+                        <button class="btn-primary" id="advancedSearchBtn">
+                            <i class="fas fa-search-plus"></i> Advanced Search
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Smart Search & Filters -->
+                <section class="smart-search-section">
+                    <div class="search-container">
+                        <div class="main-search">
+                            <input type="text" id="alumniSearchInput" class="search-input" placeholder="Search by name, company, skills, or location...">
+                            <button class="search-btn" id="alumniSearchBtn">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="filters-row">
+                        <select id="batchFilter" class="filter-select">
+                            <option value="">All Batches</option>
+                            <option value="2023">2023</option>
+                            <option value="2022">2022</option>
+                            <option value="2021">2021</option>
+                            <option value="2020">2020</option>
+                            <option value="2019">2019</option>
+                        </select>
+                        
+                        <select id="regionFilter" class="filter-select">
+                            <option value="">All Regions</option>
+                            <option value="North India">North India</option>
+                            <option value="South India">South India</option>
+                            <option value="East India">East India</option>
+                            <option value="West India">West India</option>
+                            <option value="International">International</option>
+                        </select>
+                        
+                        <select id="specializationFilter" class="filter-select">
+                            <option value="">All Specializations</option>
+                            <option value="Entrepreneur">Entrepreneur</option>
+                            <option value="Employed">Employed</option>
+                            <option value="Research">Research</option>
+                        </select>
+                        
+                        <select id="fieldFilter" class="filter-select">
+                            <option value="">All Fields</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Finance">Finance</option>
+                            <option value="Healthcare">Healthcare</option>
+                            <option value="Education">Education</option>
+                            <option value="Consulting">Consulting</option>
+                        </select>
+                        
+                        <button class="btn-secondary" id="applyFiltersBtn">Apply Filters</button>
+                        <button class="btn-secondary" id="clearFiltersBtn">Clear</button>
+                    </div>
+                </section>
+
+                <!-- Alumni Grid -->
+                <section class="alumni-grid" id="alumniGrid">
+                    <!-- Alumni cards will be populated here -->
+                </section>
+            </div>
+
+            <!-- Reach Out Page -->
+            <div id="reach-out" class="page">
+                <section class="page-header">
+                    <h1><i class="fas fa-handshake"></i> Reach Out</h1>
+                    <p>Connect with alumni for mentorship, job opportunities, and collaboration</p>
+                </section>
+
+                <!-- Interest-Based Matching -->
+                <section class="interest-matching">
+                    <div class="matching-container">
+                        <h2><i class="fas fa-target"></i> Find Alumni by Your Interests</h2>
+                        <div class="interest-selector">
+                            <label>Select your areas of interest:</label>
+                            <div class="interest-tags" id="interestTags">
+                                <span class="tag" data-interest="Software Development">Software Development</span>
+                                <span class="tag" data-interest="Data Science">Data Science</span>
+                                <span class="tag" data-interest="Machine Learning">Machine Learning</span>
+                                <span class="tag" data-interest="Finance">Finance</span>
+                                <span class="tag" data-interest="Consulting">Consulting</span>
+                                <span class="tag" data-interest="Entrepreneurship">Entrepreneurship</span>
+                                <span class="tag" data-interest="Research">Research</span>
+                                <span class="tag" data-interest="Marketing">Marketing</span>
+                            </div>
+                            <button class="btn-primary" id="findMatchingAlumniBtn">
+                                <i class="fas fa-magic"></i> Find Matching Alumni
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Request Management -->
+                <section class="request-management" id="requestManagement">
+                    <div class="requests-tabs">
+                        <button class="tab-btn active" data-tab="send-requests">Send Requests</button>
+                        <button class="tab-btn" data-tab="received-requests" id="receivedRequestsTab">Received Requests</button>
+                        <button class="tab-btn" data-tab="my-requests">My Requests</button>
+                    </div>
+
+                    <!-- Send Requests Tab -->
+                    <div id="send-requests" class="request-tab active">
+                        <div class="matched-alumni" id="matchedAlumniGrid">
+                            <!-- Matched alumni will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- Received Requests Tab (Alumni only) -->
+                    <div id="received-requests" class="request-tab">
+                        <div class="received-requests-list" id="receivedRequestsList">
+                            <!-- Received requests will be populated here -->
+                        </div>
+                    </div>
+
+                    <!-- My Requests Tab -->
+                    <div id="my-requests" class="request-tab">
+                        <div class="my-requests-list" id="myRequestsList">
+                            <!-- User's sent requests will be populated here -->
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Events Page -->
+            <div id="events" class="page">
+                <section class="page-header">
+                    <h1><i class="fas fa-calendar"></i> Events & Opportunities</h1>
+                    <div class="header-actions">
+                        <button class="btn-primary" id="createEventBtn" style="display: none;">
+                            <i class="fas fa-plus"></i> Create Event
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Event Feed (LinkedIn-style) -->
+                <section class="event-feed">
+                    <div class="feed-container" id="eventFeedContainer">
+                        <!-- Event cards will be populated here -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- Profile Page -->
+            <div id="profile" class="page">
+                <section class="page-header">
+                    <h1><i class="fas fa-user-circle"></i> My Profile</h1>
+                </section>
+
+                <section class="profile-container">
+                    <div class="profile-card">
+                        <div class="profile-image">
+                            <i class="fas fa-user-circle"></i>
+                        </div>
+                        <div class="profile-info">
+                            <h2 id="profileName">User Name</h2>
+                            <p id="profileEmail">user@email.com</p>
+                            <div class="profile-badges">
+                                <span class="badge" id="profileRoleBadge">Student</span>
+                                <span class="badge" id="profileStatusBadge">Active</span>
+                            </div>
+                        </div>
+                        <button class="btn-primary" id="editProfileBtn">
+                            <i class="fas fa-edit"></i> Edit Profile
+                        </button>
+                    </div>
+
+                    <div class="profile-details" id="profileDetails">
+                        <!-- Profile details will be populated based on user type -->
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Send Request Modal -->
+    <div id="sendRequestModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Send Connection Request</h2>
+            <form id="sendRequestForm">
+                <div class="alumni-info" id="selectedAlumniInfo">
+                    <!-- Selected alumni info will be displayed here -->
+                </div>
+                <div class="form-group">
+                    <label>Request Type:</label>
+                    <select name="requestType" required>
+                        <option value="">Select request type</option>
+                        <option value="mentorship">Mentorship</option>
+                        <option value="internship">Internship Opportunity</option>
+                        <option value="job-referral">Job Referral</option>
+                        <option value="collaboration">Collaboration</option>
+                        <option value="networking">Networking</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message:</label>
+                    <textarea name="message" rows="4" placeholder="Write a personalized message explaining your request..." required></textarea>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Send Request</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Edit Modal -->
+    <div id="editProfileModal" class="modal">
+        <div class="modal-content large-modal">
+            <span class="close">&times;</span>
+            <h2>Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" name="fullName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group" id="graduationYearGroup">
+                        <label>Year of Graduation:</label>
+                        <input type="number" name="graduationYear" min="1950" max="2030">
+                    </div>
+                    <div class="form-group">
+                        <label>Region:</label>
+                        <select name="region">
+                            <option value="">Select Region</option>
+                            <option value="North India">North India</option>
+                            <option value="South India">South India</option>
+                            <option value="East India">East India</option>
+                            <option value="West India">West India</option>
+                            <option value="International">International</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="specializationGroup">
+                        <label>Specialization:</label>
+                        <select name="specialization">
+                            <option value="">Select Specialization</option>
+                            <option value="Entrepreneur">Entrepreneur</option>
+                            <option value="Employed">Employed</option>
+                            <option value="Research">Research</option>
+                        </select>
+                    </div>
+                    <div class="form-group" id="fieldGroup">
+                        <label>Field of Specialization:</label>
+                        <input type="text" name="field" placeholder="e.g., Software Development, Finance, etc.">
+                    </div>
+                    <div class="form-group" id="companyGroup">
+                        <label>Current Company/Organization:</label>
+                        <input type="text" name="company">
+                    </div>
+                    <div class="form-group" id="positionGroup">
+                        <label>Current Position:</label>
+                        <input type="text" name="position">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Skills:</label>
+                        <input type="text" name="skills" placeholder="Enter skills separated by commas">
+                    </div>
+                    <div class="form-group full-width">
+                        <label>Bio:</label>
+                        <textarea name="bio" rows="3" placeholder="Brief description about yourself..."></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary btn-full">Update Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Event Interest Modal -->
+    <div id="eventInterestModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Express Interest</h2>
+            <div id="eventInterestContent">
+                <!-- Event details will be populated here -->
+            </div>
+            <button class="btn-primary btn-full" id="confirmInterestBtn">Confirm Interest</button>
+        </div>
+    </div>
+
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>Loading...</p>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
